@@ -1,37 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 
-const Counter = () => {
-    const [count, setCount] = useState(0);
-
-    const formCount = () => {
-        return count === 0 ? "Ноль" : count;
+const Counter = (props) => {
+    const formValue = () => {
+        return props.value === 0 ? "Empty" : props.value;
     };
 
     const getBadgeClasses = () => {
         let classes = "badge m-2 bg-";
-        classes += count === 0 ? "danger" : "primary"; 
+        classes += props.value === 0 ? "danger" : "primary"; 
 
         return classes;
     }
 
-    const handleIncrement = () => {
-        setCount(count + 1)
-    }
-
-    const handleDecrement = () => {
-        if (count !== 0) setCount(count - 1)
-    }
-
     return (
         <>
-           <span className={getBadgeClasses()}>{formCount()}</span>
+            <h4>{props.name}</h4>
+            <span className={getBadgeClasses()}>{formValue()}</span>
             <button
-                onClick={handleIncrement}
-                className="btn btn-secondary btn-sm">Increment
+                onClick={() => props.onIncrement(props.id)}
+                className="btn btn-secondary btn-sm m-2"
+            >
+                Increment
             </button>
             <button
-                onClick={handleDecrement}
-                className="btn btn-secondary btn-sm">Decrement
+                onClick={() => props.onDecrement(props.id)}
+                className="btn btn-secondary btn-sm"
+            >
+                Decrement
+            </button>
+            <button
+                onClick={() => props.onDelete(props.id)}
+                className="btn btn-danger btn-sm m-2"
+            >
+                Delete
             </button>
         </>
     );
